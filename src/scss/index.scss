@@ -1,2 +1,74 @@
-@import variables;
-@import reset;
+@import "reset";
+@import "variables";
+
+/*
+** Font sizes
+*/
+.text-large{
+    font-size:1.8rem;
+    font-weight: 600;
+}
+
+.text-medium{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.text-normal{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/*
+** Navbar
+*/
+
+#navbar{
+    width: 100vw;
+    background-color: $color-gray;
+    height: 3.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 4rem;
+
+    h2{
+        font-family: $ff-space;
+        font-weight: $fw-6;
+        color: $color-black;
+    }
+    
+    ul{
+        font-family: $ff-inter;
+        font-weight: $fw-6;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    ul li{
+        color: $color-black;
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    ul li:hover{
+        background-color: $color-charcol;
+        color: $color-white;
+        border-radius: $r-curve;
+    }
+
+    ul li:last-child{
+        position: relative;
+        span{
+            background: $color-charcol;
+            font-size: 0.7rem;
+            padding: 0.1rem;
+            position: absolute;
+            top: 0;
+            right: 0.2rem;
+            border-radius: $r-circle;
+            color: $color-white;
+        }
+    }
+}
