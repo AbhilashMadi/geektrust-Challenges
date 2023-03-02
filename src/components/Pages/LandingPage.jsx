@@ -1,13 +1,9 @@
-import React, { Fragment } from "react";
-import ProductCard from "../ProductCard";
+import React from 'react'
 
-function LandingPage({ loading, products }) {
+function LandingPage() {
   return (
-    <Fragment>
-      {/* <div>LandingPage</div> */}
-      <ProductCard/>
-    </Fragment>
-  );
+    <div>LandingPage</div>
+  )
 }
 
-export default LandingPage;
+export default LandingPage
