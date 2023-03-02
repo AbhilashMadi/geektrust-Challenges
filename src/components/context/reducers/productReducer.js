@@ -49,6 +49,9 @@ function productReducer(state,action){
                 type: [],
                 searchString: "",
             };
+        
+        default:
+            return state;
     }
 }
 

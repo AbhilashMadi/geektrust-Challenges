@@ -46,8 +46,8 @@ function cartReducer(state,action) {
 
     case UPDATE_CART_QUANTITY:
       const updatedCart = state.cartProducts.filter((product) => {
-        product.id === action.payload.id
-        ? (product.quantity = action.payload.quantity)
+        return product.id === action.payload.id
+        ? product.quantity = action.payload.quantity
         : product.quantity;
       })
 

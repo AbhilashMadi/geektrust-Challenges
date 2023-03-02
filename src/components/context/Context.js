@@ -1,4 +1,4 @@
-import {useState,createContext,useContext,useEffect} from "react";
+import React,{useState,createContext,useContext,useReducer,useEffect} from "react";
 import {endPoint} from "../../config";
 import { requestManager } from "../../utility/fetchData";
 import cartReducer from "./reducers/cartReducer";
@@ -13,7 +13,7 @@ function cartState(){
 }
 
 function Context({children}){
-    const [loading,setLoading] = useState([]);
+    const [loading,setLoading] = useState(true);
     const [state,dispatch] = useReducer(cartReducer,{
         products:[],
         cartPoducts: [],
@@ -43,6 +43,11 @@ function Context({children}){
                 }
             })
         })
+        .catch((error) => {
+            throw new Error(error);
+        });
+
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -56,8 +61,11 @@ function Context({children}){
         }
     },[cartProducts]);
 
+    // console.log(state.products);
+
     return(
         <cartContext.Provider value={{
+            loading,
             state,
             dispatch,
             productsState,
@@ -69,4 +77,4 @@ function Context({children}){
 }
 
 export default Context;
-export {cartContext};
+export {cartState};
