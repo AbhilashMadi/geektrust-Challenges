@@ -8,21 +8,21 @@ function CartPage() {
   return (
     <section className="cart-page">
       <div className="cart-container">
-        <h4 className="cart-header">
-          Shopping Cart
-        </h4>
+        <h4 className="cart-header">Shopping Cart</h4>
         <div className="cart-products">
-          {
-            cart.length
-            ? cart.map((product,index) => <CartProducts key={index} {...product}/>)
-            : <CartEmpty/>
-          }
+          {cart.length ? (
+            cart.map((product, index) => (
+              <CartProducts key={index} {...product} />
+            ))
+          ) : (
+            <CartEmpty />
+          )}
         </div>
         <div className="cart-total">
-          total: {
-            (cart.length>0) 
-            ? cart.reduce((sum,item) => sum + item.price*item.CartEmpty,0)
-            :0
+          total:{" "}
+          {cart.length > 0
+            ? cart.reduce((acc, el) => acc + el.price * el.cartQuantity, 0)
+            : 0
           }
         </div>
       </div>
