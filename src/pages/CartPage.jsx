@@ -14,7 +14,7 @@ function CartPage() {
         <div className="cart-products">
           {
             cart.length
-            ? cart.map((product,index) => <CartProducts key={index} prdouct={product}/>)
+            ? cart.map((product,index) => <CartProducts key={index} {...product}/>)
             : <CartEmpty/>
           }
         </div>

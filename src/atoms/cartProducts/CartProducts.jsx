@@ -1,9 +1,11 @@
 import React,{useContext} from "react";
 import { ProductContext } from "../../context/ProductContextProvider";
+import {ACTIONS} from "../../context/actions";
+
+const {REMOVE_PRODUCT_FROM_CART,UPDATE_PRODUCT_QUANTITY} = ACTIONS;
 
 const CartProducts = (props) => {
   const { dispatch } = useContext(ProductContext);
-  console.log(props.product.product);
   return (
     <div className="cart-prod">
       <div className="cart-prod-img">
@@ -17,7 +19,7 @@ const CartProducts = (props) => {
         <select
           id=""
           onChange={(e) =>
-            dispatch({ type: "CHANGE_QTY", payload: [props, e.target.value] })
+            dispatch({ type: UPDATE_PRODUCT_QUANTITY, payload: [props, e.target.value] })
           }
         >
           {[...new Array(props.quantity)].map((el, i) => (
@@ -29,7 +31,7 @@ const CartProducts = (props) => {
         <button
           className="remove-from-cart-btn"
           onClick={() =>
-            dispatch({ type: "REMOVE_FROM_CART", payload: props.id })
+            dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: props.id })
           }
         >
           Delete

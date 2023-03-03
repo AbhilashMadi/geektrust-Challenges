@@ -5,7 +5,7 @@ import {ACTIONS} from "../../context/actions";
 const {ADD_PRODUCT_TO_CART,REMOVE_PRODUCT_FROM_CART} = ACTIONS;
 
 function Card({item}) {
-  let {imageURL,color,gender,id,name,price,quantity,type} = item;
+  let {imageURL,color,id,name,price} = item;
   let {
     state: {cart},dispatch,
   } = useContext(ProductContext);
@@ -14,7 +14,7 @@ function Card({item}) {
     <div className="product">
       <div className="product__container">
         <h4 className="product__title">{name}</h4>
-        <img src={imageURL} alt="product__image" style={{ width: "100%" }} />
+        <img src={imageURL} alt={name} style={{ width: "100%" }} />
         <div className="product__description">
           <div>
             <div className="product__price">Price:Rs {price}</div>
@@ -25,7 +25,7 @@ function Card({item}) {
               color
             </div>
           </div>
-          {cart.some((p) => id == id) ? (
+          {cart.some((product) => product.id === id) ? (
             <button
               className="btn add-to-cart"
               onClick={() =>

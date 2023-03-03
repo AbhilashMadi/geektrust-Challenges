@@ -9,9 +9,6 @@ import {SearchBar,FilterBar,Card} from "../atoms/exports";
 
 const {
   GET_PRODUCTS,
-  ADD_PRODUCT_TO_CART,
-  REMOVE_PRODUCT_FROM_CART,
-  UPDATE_PRODUCT_QUANTITY,
 } = ACTIONS;
 
 function LandingPage() {
@@ -48,7 +45,7 @@ function LandingPage() {
           item.type.toLowerCase() === searchString ||
           item.price === searchString
         )
-          return true;
+          {return true};
       });
     }
 

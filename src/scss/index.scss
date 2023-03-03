@@ -11,6 +11,7 @@ body{
     width: 100vw;
     height: auto;
     background-color: $background-white;
+    font-family: $ff-inter;
 }
 
 a{
@@ -187,6 +188,7 @@ ol,ul{
     border: 1px solid $background-ash;
     padding: 1rem;
     font-family: $ff-inter;
+    box-shadow: $shadow-card;
     
     .category{
         color: $background-black;
