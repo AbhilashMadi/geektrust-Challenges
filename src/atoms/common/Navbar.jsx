@@ -1,23 +1,31 @@
-import React from "react";
-import {useNavigate} from "react-router-dom";
+import React,{useContext} from "react";
+import {NavLink} from "react-router-dom";
+import { ProductContext } from "../../context/ProductContextProvider";
 
-function Navbar({cartCount}) {
-  const navigate = useNavigate();
+function Navbar() {
+
+  let {state:{cart}} = useContext(ProductContext);
 
   return (
     <header id="navbar">
-      <h2 className="title" onClick={() => navigate("/")}>
+      <NavLink to="/">
+      <h2 className="title">
         TeeRex-store
       </h2>
+      </NavLink>
       <nav>
         <ul className="navigation">
-          <li onClick={() => navigate("/")} className="navigation__products nav__item">
+          <NavLink to="/">
+          <li className="navigation__products nav__item">
             Porducts
           </li>
-          <li onClick={() => navigate("/cart")} className="navigation__cart nav__item">
-            <span className="cart-count">{0}</span>
-            <i class="fa fa-shopping-cart"></i>
+          </NavLink>
+          <NavLink to="/cart">
+          <li className="navigation__cart nav__item">
+            <span className="cart-count">{cart.length}</span>
+            <i className="fa fa-shopping-cart"></i>
           </li>
+          </NavLink>
         </ul>
       </nav>
     </header>

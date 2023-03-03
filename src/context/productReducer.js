@@ -26,13 +26,13 @@ function productReducer(state=intialState,actions) {
         case REMOVE_PRODUCT_FROM_CART:
             return {
                 ...state,
-                cart:state.cart.filter((product) => product.id!==payload); 
+                cart:state.cart.filter((product) => product.id!==payload),
             }
 
         case UPDATE_PRODUCT_QUANTITY:
             return {
                 ...state,
-                cart:state.cart.filter((product) => product.id === payload.id ? product.cartQuantity=payload[1]:p)
+                cart:state.cart.filter((product) => product.id === payload.id ? product.cartQuantity=payload[1]:product)
             }
         
         default:

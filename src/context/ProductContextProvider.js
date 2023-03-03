@@ -1,8 +1,9 @@
+import React from "react"
 import { createContext, useReducer } from "react";
 import productReducer from "./productReducer";
 import searchReducer from "./searchReducer";
 
-const productContext = createContext();
+const ProductContext = createContext();
 function ProductContextProvider({children}){
     const [state,dispatch] = useReducer(productReducer,{
         products:[],
@@ -20,10 +21,10 @@ function ProductContextProvider({children}){
     const [filterState, filterDispatch] = useReducer(searchReducer,filterIntialState)
 
     return(
-        <productContext.Provider value={{state,dispatch,filterState,filterDispatch}}>
+        <ProductContext.Provider value={{state,dispatch,filterState,filterDispatch}}>
             {children}
-        </productContext.Provider>
+        </ProductContext.Provider>
     )
 };
 
-export {ProductContextProvider,productContext}; 
+export {ProductContextProvider,ProductContext}; 
