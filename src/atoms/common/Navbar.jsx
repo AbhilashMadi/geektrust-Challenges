@@ -11,10 +11,10 @@ function Navbar({cartCount}) {
       </h2>
       <nav>
         <ul className="navigation">
-          <li onClick={() => navigate("/")} className="navigation__products">
+          <li onClick={() => navigate("/")} className="navigation__products nav__item">
             Porducts
           </li>
-          <li onClick={() => navigate("/cart")} className="navigation__cart">
+          <li onClick={() => navigate("/cart")} className="navigation__cart nav__item">
             <span className="cart-count">{0}</span>
             <i class="fa fa-shopping-cart"></i>
           </li>

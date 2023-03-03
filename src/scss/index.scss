@@ -53,34 +53,21 @@ ol,ul{
         font-weight: 400;
         height: inherit;
         @include flex-cross-center;
-
         
-        &__products{
-            padding-inline: 2rem;
+        .nav__item{
             background-color: $background-white;
-            margin-left: 0.5rem;
+            padding-inline: 2rem;
             height: 3rem;
-            @include flex-center;
+            margin-left: 0.5rem;
+            @include flex-center;    
             &:hover{
                 background-color: $background-black;
                 color: $text-white;
             }
-            
         }
-        
-        &__cart{
-            background-color: $background-white;
-            margin-left: 0.5rem;
-            padding-inline: 2rem;
-            height: 3rem;
-            @include flex-center;
-            &:hover{
-                background-color: $background-black;
-                color: $text-white;
-            }
-            
-            flex-direction: column;
 
+        &__cart{
+            flex-direction: column;
             .fa-shopping-cart{
                 font-size: 1.5rem;
             }
