@@ -1,34 +1,40 @@
 /*
 ** Theme
 */
-$color-white:#FFFFFF;
-$color-gray:#D9D9D9;
-$color-charcol:#383838;
-$color-ash:#727272;
-$color-black:#010000;
+$background-white:#FFFFFF;
+$background-ash: #D9D9D9;
+$background-charcol: #383838;
+$background-black: #000000;
 
-/*
-** Text
-*/
-$text-primary:#010000;
-$text-secondary:#383838;
-$text-white:#FFFFFF;
+$text-charcol: #383838;
+$text-black: #000000;
+$text-white: #FFFFFF;
 
 /*
 ** Fonts
 */
-$ff-inter: "Inter",sans-serif;
-$ff-space: 'Space Grotesk', sans-serif;
+$ff-inter: 'Inter', sans-serif;
 
 /*
-** Font Weights
+** font sizes
 */
-$fw-6: 600;
-$fw-5: 500;
-$fw-4: 400;
 
 /*
-** borders
+** mixins
 */
-$r-curve: 6px;
-$r-circle: 50%;
+
+@mixin flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-cross-center{
+    display: flex;
+    align-items: center;
+}
+
+@mixin title-large{
+    font-size: 2rem;
+    font-weight: 600;
+}

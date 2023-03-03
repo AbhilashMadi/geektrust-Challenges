@@ -1,23 +1,18 @@
-import React, {Fragment } from "react";
-import { Routes, Route } from "react-router-dom";
-
-import Context from "./components/context/Context";
-import LandingPage from "./components/Pages/LandingPage";
-import Cart from "./components/Pages/Cart";
-import Navbar from "./components/atoms/Navbar/Navbar";
+import React, { Fragment } from "react";
+import {Navbar} from "./atoms/exports";
+import {LandingPage,CartPage,NoPages} from "./pages/exportPage";
+import {Routes,Route} from "react-router-dom";
 
 function App() {
   return (
     <Fragment>
-      <Context>
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/cart" element={<Cart />} />
-      </Routes>
-      </Context>
+      <Navbar/>
+    <Routes>
+      <Route index path="/" element={<LandingPage/>}/>
+      <Route path="/cart" element={<CartPage/>}/>
+      <Route path="*" element={<NoPages/>}/>
+    </Routes>
     </Fragment>
   );
 }
-
 export default App;

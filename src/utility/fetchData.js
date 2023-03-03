@@ -26,4 +26,4 @@ function requestManager(url,options={},attempts=3){
     });
 };
 
-export {requestManager};
+export default requestManager;
