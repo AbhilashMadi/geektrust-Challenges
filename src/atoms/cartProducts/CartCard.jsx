@@ -12,7 +12,10 @@ function CartCard(props) {
 
   const incrementQuantity = () => {
       if(qtyCount > quantity){
-        alert("out of stock")
+        alert(
+          `Unfortunately, we are currently unable to fulfil your purchase since there are no more available products. Max Quantity ${quantity +
+            1}`
+        );
         return;
       }
       setQtyCount(qtyCount + 1);

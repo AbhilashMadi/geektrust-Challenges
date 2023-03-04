@@ -5,7 +5,7 @@ import { ACTIONS } from "../context/actions";
 
 import { uID, requestManager, ScrollToTop } from "../utility/utilityExport";
 
-import {SearchBar,FilterBar,Card} from "../atoms/exports";
+import {SearchBar,FilterBar,Card, NoSearchFound} from "../atoms/exports";
 
 const {
   GET_PRODUCTS,
@@ -100,7 +100,7 @@ function LandingPage() {
       <section className="products-container">
         <FilterBar />
         <div className="products">
-          {featuresHandler().length === 0 && <p>Searched Product not found</p>}
+          {featuresHandler().length === 0 && <NoSearchFound/>}
           {featuresHandler().map((item) => (
             <Card key={uID()} item={item} />
           ))}
