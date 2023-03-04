@@ -4,6 +4,7 @@ import Category from "./Category";
 const Filters = () => {
   return (
     <div className="filter-main">
+      <h4 className="filter-title">Filer Products</h4>
       <div className="filter-container">
         <Category
           heading={"Color"}

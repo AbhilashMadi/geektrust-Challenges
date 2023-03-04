@@ -1,9 +1,11 @@
 import React,{useContext} from "react";
 import {ProductContext} from "../context/ProductContextProvider";
-import {CartProducts,CartEmpty} from "../atoms/exports";
+import {CartEmpty, CartCard} from "../atoms/exports";
 
 function CartPage() {
   let {state:{cart}} = useContext(ProductContext);
+
+  const hideIt = cart.length > 0 ? "visible" : "none";
 
   return (
     <section className="cart-page">
@@ -12,17 +14,16 @@ function CartPage() {
         <div className="cart-products">
           {cart.length ? (
             cart.map((product, index) => (
-              <CartProducts key={index} {...product} />
+              <CartCard key={index} {...product}/>
             ))
           ) : (
-            <CartEmpty />
+            <CartEmpty/>
           )}
         </div>
-        <div className="cart-total">
-          total:{" "}
+        <div className="cart-total" style={{display:hideIt}}>
           {cart.length > 0
-            ? cart.reduce((acc, el) => acc + el.price * el.cartQuantity, 0)
-            : 0
+            ? "Total Payment: " + cart.reduce((acc, el) => acc + el.price * el.cartQuantity, 0)
+            : null
           }
         </div>
       </div>

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { ProductContext } from "../context/ProductContextProvider";
-import requestManager from "../utility/fetchData";
 import { endPoint } from "../config";
 import { ACTIONS } from "../context/actions";
-import uID from "../utility/generateID";
+
+import { uID, requestManager, ScrollToTop } from "../utility/utilityExport";
 
 import {SearchBar,FilterBar,Card} from "../atoms/exports";
 
@@ -74,6 +74,7 @@ function LandingPage() {
       }
       result = picks;
     }
+    
     // filter by price
     if (Price.length > 0) {
       let picks = [];
@@ -90,18 +91,21 @@ function LandingPage() {
     }
     return result;
   };
-  
+
   return (
     <main className="products-landing-page">
-      <SearchBar />
+      <aside className="filter-Bar">
+        <SearchBar />
+      </aside>
       <section className="products-container">
         <FilterBar />
         <div className="products">
           {featuresHandler().length === 0 && <p>Searched Product not found</p>}
           {featuresHandler().map((item) => (
-            <Card key={uID()} item = {item} />
+            <Card key={uID()} item={item} />
           ))}
         </div>
+        <ScrollToTop />
       </section>
     </main>
   );

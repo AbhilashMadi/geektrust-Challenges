@@ -4,7 +4,7 @@ import Options from "./Options";
 const Category = ({ heading, data }) => {
   return (
     <div className="category">
-      <h3 className="category__title">{heading}</h3>
+      <h4 className="category__title">{heading}</h4>
       {data.map((elem, index) => (
         <Options key={index} section={heading} name={elem} />
       ))}

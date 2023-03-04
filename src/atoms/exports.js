@@ -8,3 +8,4 @@ export { default as FilterBar} from "./filterBar/FilterBar";
 export { default as SearchBar } from "./products/SearchBar";
 export { default as Card} from "./products/Card";
 export { default as CartEmpty} from "./cartProducts/CartEmpty";
+export { default as NoProducts} from "./products/NoProducts";

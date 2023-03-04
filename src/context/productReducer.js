@@ -32,7 +32,7 @@ function productReducer(state=intialState,actions) {
         case UPDATE_PRODUCT_QUANTITY:
             return {
                 ...state,
-                cart:state.cart.filter((product) => product.id === payload.id ? product.cartQuantity=payload[1]:product)
+                cart:state.cart.filter((product) => product.id === payload[0].id ? product.cartQuantity=payload[1]:product)
             }
         
         default:
