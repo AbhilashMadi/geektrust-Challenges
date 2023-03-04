@@ -31,6 +31,7 @@ function Card({item}) {
               onClick={() =>
                 dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: id })
               }
+              style={{ backgroundColor: "#ff3838", border:"none" }}
             >
               REMOVE ITEM
             </button>
