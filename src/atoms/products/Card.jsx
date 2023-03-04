@@ -14,13 +14,14 @@ function Card({item}) {
     <div className="product">
       <div className="product__container">
         <h4 className="product__title">{name}</h4>
-        <img src={imageURL} alt={name} style={{ width: "100%" }} />
+        <img src={imageURL} alt={name} style={{ width: "100%" }} title={name} />
         <div className="product__description">
           <div>
             <div className="product__price">Price:Rs {price}</div>
             <div
               className="product__color"
               style={{ backgroundColor: `${color}` }}
+              title={color}
             >
               color
             </div>
@@ -31,7 +32,7 @@ function Card({item}) {
               onClick={() =>
                 dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: id })
               }
-              style={{ backgroundColor: "#ff3838", border:"none" }}
+              style={{ backgroundColor: "#ff3838", border: "none" }}
             >
               REMOVE ITEM
             </button>

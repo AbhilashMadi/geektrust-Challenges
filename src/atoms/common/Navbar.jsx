@@ -9,22 +9,20 @@ function Navbar() {
   return (
     <header id="navbar">
       <NavLink to="/">
-      <h2 className="title">
-        TeeRex-store
-      </h2>
+        <h2 className="title">TeeRex-store</h2>
       </NavLink>
       <nav>
         <ul className="navigation">
           <NavLink to="/">
-          <li className="navigation__products nav__item">
-            Porducts
-          </li>
+            <li role="button" className="navigation__products nav__item">
+              Products
+            </li>
           </NavLink>
           <NavLink to="/cart">
-          <li className="navigation__cart nav__item">
-            <span className="cart-count">{cart.length}</span>
-            <i className="fa fa-shopping-cart"></i>
-          </li>
+            <li className="navigation__cart nav__item" role="button">
+              <span className="cart-count">{cart.length}</span>
+              <i className="fa fa-shopping-cart"></i>
+            </li>
           </NavLink>
         </ul>
       </nav>

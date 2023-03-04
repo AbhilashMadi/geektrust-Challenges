@@ -20,6 +20,12 @@ function SearchBar() {
   const searchHandler = () => {
     filterDispatch({type:GET_SEARCH_STRING,payload:searchText});
   }
+  
+  const keyPressSearch = (event) => {
+    if (event.key === "Enter"){
+      filterDispatch({type:GET_SEARCH_STRING,payload:searchText});
+    }
+  }
 
   return (
     <div className="searchbar">
@@ -28,6 +34,7 @@ function SearchBar() {
         placeholder="Search products..."
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
+        onKeyPress={keyPressSearch}
       />
       <button onClick={searchHandler}>
         <i className="fa fa-search"></i>

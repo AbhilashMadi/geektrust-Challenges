@@ -65,7 +65,11 @@ ol,ul{
     .title{
         color: $text-charcol;
         font-weight: 600;
-        padding-left: 2rem;
+        padding-left: 2vmin;
+
+        @media screen and (max-width: 576px) {
+          font-size: 1.2rem;
+        }
     }
     
     .navigation{
@@ -178,6 +182,8 @@ ol,ul{
     padding: 1rem;
     font-family: $ff-inter;
     box-shadow: $shadow-card;
+    z-index: 100;
+
 
     .filter-title{
         margin-bottom: 0.5rem;
@@ -228,7 +234,9 @@ ol,ul{
 
     button{
         padding: 13px;
+        margin: 0.3rem;
         border:none;
+        outline: none;
         border-radius: 3px;
 
         &:hover{
@@ -239,6 +247,7 @@ ol,ul{
         &:active{
             border: none;
             scale: 0.98;
+            outline: none;
         }
     }
 }
@@ -419,7 +428,7 @@ ol,ul{
 
 .cart-page{
     width: 100vw;
-    min-height: 100vh;
+    min-height: 80vh;
     @include flex-center;
 
     .cart-container{
@@ -490,7 +499,7 @@ ol,ul{
 
         .products{
             width: 60%;
-            margin: 0 0rem;
+            margin: 0 0;
             display: grid;
             grid-template-columns: repeat(3, minmax(15rem, 1fr));
             grid-gap: 2rem;
@@ -504,6 +513,7 @@ ol,ul{
                 margin: 0 0.5rem;
                 grid-template-columns: repeat(1, minmax(15rem, 1fr));
                 grid-gap: 1rem;
+                margin-left: 0 !important;
             }
         }
     }
