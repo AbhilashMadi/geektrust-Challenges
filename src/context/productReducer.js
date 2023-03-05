@@ -1,10 +1,11 @@
 import { intialState,ACTIONS } from "./actions";
 
 const {
-  GET_PRODUCTS,
-  ADD_PRODUCT_TO_CART,
-  REMOVE_PRODUCT_FROM_CART,
-  UPDATE_PRODUCT_QUANTITY,
+    GET_PRODUCTS,
+    ADD_PRODUCT_TO_CART,
+    REMOVE_PRODUCT_FROM_CART,
+    UPDATE_PRODUCT_QUANTITY,
+    RESET_PRODUCTS,
 } = ACTIONS;
 
 function productReducer(state=intialState,actions) {
@@ -34,7 +35,10 @@ function productReducer(state=intialState,actions) {
                 ...state,
                 cart:state.cart.filter((product) => product.id === payload[0].id ? product.cartQuantity=payload[1]:product)
             }
-        
+
+        case RESET_PRODUCTS:
+            return state;
+
         default:
             return state;
     }

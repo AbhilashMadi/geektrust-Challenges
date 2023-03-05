@@ -2,10 +2,10 @@ import React,{useContext,useState} from "react";
 import { ProductContext } from "../../context/ProductContextProvider";
 import {ACTIONS} from "../../context/actions";
 
-const {GET_SEARCH_STRING, SHOW_FILTER} = ACTIONS;
+const {GET_SEARCH_STRING, SHOW_FILTER, RESET_PRODUCTS} = ACTIONS;
 
 function SearchBar() {
-  let { filterDispatch, showFilterDispatch, showFilter } = useContext(
+  let { filterDispatch, showFilterDispatch, dispatch } = useContext(
     ProductContext
   );
   const [searchText,setSearchText] = useState("")
@@ -30,7 +30,8 @@ function SearchBar() {
   }
 
   const handleResponsiveFilterBar = () => {
-    showFilterDispatch({type:SHOW_FILTER})
+    showFilterDispatch({type:SHOW_FILTER});
+    dispatch({type: RESET_PRODUCTS})
   }
 
   return (

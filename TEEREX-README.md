@@ -58,7 +58,8 @@ Eg. green polo
 ![scrool to top](./src/assets/readme/scrolltotop.png)
  
 - As for responsive design I used Grid, flexbox and media querys.
-![scrool to top](./src/assets/readme/responsiveview.png)
+
+![scrool to top](./src/assets/readme/responsivefilter.png)
 
 ## CODE LOGIC
 

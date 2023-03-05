@@ -23,6 +23,7 @@ const ACTIONS = {
   /*Responsive Filter*/
   SHOW_FILTER: "show-res-filter",
   CLOSE_FILTER: "close-filter",
+  RESET_PRODUCTS:"reset-products"
 };
 
 export {intialState,ACTIONS};

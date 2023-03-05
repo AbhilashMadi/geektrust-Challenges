@@ -99,7 +99,7 @@ function LandingPage() {
       <section className="products-container">
         <div>
           <FilterBar />
-          {showFilter && <FilterModel />}
+          {showFilter && <div className="filter-focus"><FilterModel /></div>}
         </div>
         <div className="products">
           {featuresHandler().length === 0 && <NoSearchFound />}
