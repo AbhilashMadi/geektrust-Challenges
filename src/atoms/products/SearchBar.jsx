@@ -2,10 +2,12 @@ import React,{useContext,useState} from "react";
 import { ProductContext } from "../../context/ProductContextProvider";
 import {ACTIONS} from "../../context/actions";
 
-const {GET_SEARCH_STRING} = ACTIONS;
+const {GET_SEARCH_STRING, SHOW_FILTER} = ACTIONS;
 
 function SearchBar() {
-  let {filterDispatch} = useContext(ProductContext);
+  let { filterDispatch, showFilterDispatch, showFilter } = useContext(
+    ProductContext
+  );
   const [searchText,setSearchText] = useState("")
 
   //debouncing technique (we are using button so here debounce is optional)
@@ -27,6 +29,10 @@ function SearchBar() {
     }
   }
 
+  const handleResponsiveFilterBar = () => {
+    showFilterDispatch({type:SHOW_FILTER})
+  }
+
   return (
     <div className="searchbar">
       <input
@@ -38,6 +44,9 @@ function SearchBar() {
       />
       <button onClick={searchHandler}>
         <i className="fa fa-search"></i>
+      </button>
+      <button className="filter-btn" onClick={handleResponsiveFilterBar}>
+        <i className="fa fa-filter"></i>
       </button>
     </div>
   );

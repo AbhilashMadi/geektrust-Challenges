@@ -2,6 +2,7 @@ import React from "react"
 import { createContext, useReducer } from "react";
 import productReducer from "./productReducer";
 import searchReducer from "./searchReducer";
+import ShowFilterReducer from "./showReducer";
 
 const ProductContext = createContext();
 function ProductContextProvider({children}){
@@ -19,9 +20,13 @@ function ProductContextProvider({children}){
     };
 
     const [filterState, filterDispatch] = useReducer(searchReducer,filterIntialState)
+    const [showFilter, showFilterDispatch] = useReducer(
+      ShowFilterReducer,
+      false
+    );
 
     return(
-        <ProductContext.Provider value={{state,dispatch,filterState,filterDispatch}}>
+        <ProductContext.Provider value={{state,dispatch,filterState,filterDispatch,showFilterDispatch,showFilter}}>
             {children}
         </ProductContext.Provider>
     )

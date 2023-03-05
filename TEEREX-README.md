@@ -6,7 +6,11 @@ During my Crio.Do INTV-1 sprint module, I chose the Teerex-store as my frontend 
 
 ### For UI reference I created a figma file
 
-> [Figma File](https://www.figma.com/file/egnjVfQk0mq5dfBUFiEqI7/TeeRex-Store?node-id=31%3A5&t=yVnJtZQGM5Dotyg4-1)
+> ### [LIVE SITE](https://teerex-store-abhilash.netlify.app)
+
+> ### [GIT HUB](https://github.com/AbhilashMadi/geektrust-Challenges.git)
+
+> ### [FIGMA FILE](https://www.figma.com/file/egnjVfQk0mq5dfBUFiEqI7/TeeRex-Store?node-id=0%3A1&t=qb13j2WBQKX9NlEW-1)
 
 ### functionlity
  
@@ -54,6 +58,7 @@ Eg. green polo
 ![scrool to top](./src/assets/readme/scrolltotop.png)
  
 - As for responsive design I used Grid, flexbox and media querys.
+![scrool to top](./src/assets/readme/responsiveview.png)
 
 ## CODE LOGIC
 
@@ -91,8 +96,7 @@ Eg. green polo
 
 > ### File Tree
 
-```
-
+```js
 
 │----TEEREX-README.md
 │

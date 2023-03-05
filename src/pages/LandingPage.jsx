@@ -4,15 +4,14 @@ import { endPoint } from "../config";
 import { ACTIONS } from "../context/actions";
 
 import { uID, requestManager, ScrollToTop } from "../utility/utilityExport";
-
-import {SearchBar,FilterBar,Card, NoSearchFound} from "../atoms/exports";
+import {SearchBar,FilterBar,Card, NoSearchFound, FilterModel} from "../atoms/exports";
 
 const {
   GET_PRODUCTS,
 } = ACTIONS;
 
 function LandingPage() {
-  let { state, dispatch, filterState } = useContext(ProductContext);
+  let { state, dispatch, filterState, showFilter } = useContext(ProductContext);
 
   let { products } = state;
   let { Color, Gender, Price, Type, searchString } = filterState;
@@ -98,9 +97,12 @@ function LandingPage() {
         <SearchBar />
       </aside>
       <section className="products-container">
-        <FilterBar />
+        <div>
+          <FilterBar />
+          {showFilter && <FilterModel />}
+        </div>
         <div className="products">
-          {featuresHandler().length === 0 && <NoSearchFound/>}
+          {featuresHandler().length === 0 && <NoSearchFound />}
           {featuresHandler().map((item) => (
             <Card key={uID()} item={item} />
           ))}

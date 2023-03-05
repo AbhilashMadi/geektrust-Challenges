@@ -184,7 +184,6 @@ ol,ul{
     box-shadow: $shadow-card;
     z-index: 100;
 
-
     .filter-title{
         margin-bottom: 0.5rem;
         color: $text-charcol;
@@ -248,6 +247,14 @@ ol,ul{
             border: none;
             scale: 0.98;
             outline: none;
+        }
+    }
+
+    .filter-btn{
+        display: none;
+
+        @media screen and (max-width: 576px){
+            display: inline;
         }
     }
 }
@@ -349,6 +356,10 @@ ol,ul{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
+
+        @media screen and (max-width: 576px) {
+            justify-content: center;
+        }
         
         .products{
             // width: 60%;
@@ -514,6 +525,74 @@ ol,ul{
                 grid-template-columns: repeat(1, minmax(15rem, 1fr));
                 grid-gap: 1rem;
                 margin-left: 0 !important;
+            }
+        }
+    }
+}
+
+/*
+** Responsive Filter
+*/
+
+.filter-main{
+    @media screen and (max-width: 576px) {
+        display: none;
+    }
+}
+
+.filter-model{
+     width: 150px;
+    height: 32rem;
+    margin-right: -2rem;
+    background-color: $background-white;
+    border: 1px solid $background-ash;
+    padding: 1rem;
+    font-family: $ff-inter;
+    box-shadow: $shadow-card;
+    
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    visibility: visible;
+    transition: all 0.2s ease-in-out;
+
+    .filter-title{
+        margin-bottom: 0.5rem;
+        color: $text-charcol;
+    }
+    
+    .category{
+        color: $background-black;
+        margin-bottom: 1rem;
+
+        &__title{
+            margin-bottom: 0.5rem;
+            
+        }
+
+        &__option{
+            margin-bottom: 0.2rem;
+            
+            
+            label{
+                margin-left: 0.3rem;
+            }
+        }
+    }
+
+    .close-btn{
+        width: 100%;
+        text-align: center;
+
+        .btn{
+            padding-block: 0.5rem;
+            padding-inline: 2rem;
+
+            &:active{
+                transform: scale(0.98);
             }
         }
     }
