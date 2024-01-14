@@ -1,23 +1,26 @@
+import { CheckboxProps } from "@radix-ui/react-checkbox";
+import { useId } from "@radix-ui/react-id";
 import { Checkbox } from "@ui/checkbox";
-import { FC, useId } from "react";
+import { FC } from "react";
 
-interface IItemCheckbox {
+interface IItemCheckbox extends CheckboxProps {
   label: string;
 }
 
-const ItemCheckbox: FC<IItemCheckbox> = (props) => {
-  const { label } = props;
+const ItemCheckbox: FC<IItemCheckbox> = ({ label, ...rest }) => {
   const checkboxId = useId();
 
-  return <div className="flex items-center space-x-2">
-    <Checkbox id={checkboxId} />
-    <label
-      htmlFor={checkboxId}
-      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-    >
-      {label}
-    </label>
-  </div>
+  return (
+    <div className="flex items-center space-x-2">
+      <Checkbox id={checkboxId} {...rest} />
+      <label
+        htmlFor={checkboxId}
+        className="text-sm font-medium leading-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {label}
+      </label>
+    </div>
+  );
 };
 
 export default ItemCheckbox;

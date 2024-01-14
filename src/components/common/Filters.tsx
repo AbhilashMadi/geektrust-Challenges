@@ -4,12 +4,50 @@ import { Slider } from "@ui/slider";
 import { FC, useState } from "react";
 import { toast } from "sonner";
 
+type Filters = {
+  colors: string[];
+  gender: string[];
+  type: string[];
+  range: [number, number];
+}
+
 const Filters: FC = () => {
-  const [range, setRange] = useState<[number, number]>([200, 400]);
+  const [filters, setFilters] = useState<Filters>({
+    colors: [],
+    gender: [],
+    type: [],
+    range: [200, 600],
+  })
 
   const handleRangeChange = (value: [number, number]) => {
-    setRange(value);
+    setFilters((pre) => ({
+      ...pre,
+      range: value,
+    }));
   };
+
+  const handleCheckboxChange = (category: keyof Filters, value: string, checked: boolean) => {
+    setFilters((prevFilters) => {
+      const updatedCategory = checked
+        ? [...prevFilters[category], value]
+        : prevFilters[category].filter((item) => item !== value);
+
+      return {
+        ...prevFilters,
+        [category]: updatedCategory,
+      };
+    });
+  };
+
+  const clearFilters = (): void => {
+    setFilters({
+      colors: [],
+      gender: [],
+      type: [],
+      range: [200, 600],
+    });
+  };
+
 
   return (
     <aside className="w-80">
@@ -28,52 +66,95 @@ const Filters: FC = () => {
       >
         Show Toast
       </Button> */}
+      {JSON.stringify(filters)}
       <div className="sticky top-16 space-y-2">
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Colors</h5>
           <div className="[&>*]:p-1 my-2">
-            <ItemCheckbox label={"Pink"} />
-            <ItemCheckbox label={"Blue"} />
-            <ItemCheckbox label={"Green"} />
-            <ItemCheckbox label={"Black"} />
-            <ItemCheckbox label={"Purple"} />
-            <ItemCheckbox label={"Red"} />
-            <ItemCheckbox label={"Grey"} />
-            <ItemCheckbox label={"White"} />
-            <ItemCheckbox label={"Yellow"} />
+            <ItemCheckbox
+              label={"Pink"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "pink", checked)}
+              checked={filters.colors.includes("pink")} />
+            <ItemCheckbox
+              label={"Blue"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "blue", checked)}
+              checked={filters.colors.includes("blue")} />
+            <ItemCheckbox
+              label={"Green"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "green", checked)}
+              checked={filters.colors.includes("green")} />
+            <ItemCheckbox
+              label={"Black"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "black", checked)}
+              checked={filters.colors.includes("black")} />
+            <ItemCheckbox
+              label={"Purple"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "purple", checked)}
+              checked={filters.colors.includes("purple")} />
+            <ItemCheckbox
+              label={"Red"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "red", checked)}
+              checked={filters.colors.includes("red")} />
+            <ItemCheckbox
+              label={"Grey"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "grey", checked)}
+              checked={filters.colors.includes("grey")} />
+            <ItemCheckbox
+              label={"White"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "white", checked)}
+              checked={filters.colors.includes("white")} />
+            <ItemCheckbox
+              label={"Yellow"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "yellow", checked)}
+              checked={filters.colors.includes("yellow")} />
           </div>
         </div>
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Gender</h5>
           <div className="[&>*]:p-1 my-2">
-            <ItemCheckbox label={"Men"} />
-            <ItemCheckbox label={"Women"} />
+            <ItemCheckbox
+              label={"Men"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("gender", "men", checked)}
+              checked={filters.gender.includes("men")} />
+            <ItemCheckbox
+              label={"Women"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("gender", "women", checked)}
+              checked={filters.gender.includes("women")} />
           </div>
         </div>
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Type</h5>
           <div className="[&>*]:p-1 my-2">
-            <ItemCheckbox label={"Basic"} />
-            <ItemCheckbox label={"Hoodie"} />
-            <ItemCheckbox label={"Polo"} />
+            <ItemCheckbox
+              label={"Basic"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("type", "basic", checked)}
+              checked={filters.type.includes("basic")} />
+            <ItemCheckbox
+              label={"Hoodie"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("type", "hoodie", checked)}
+              checked={filters.type.includes("hoodie")} />
+            <ItemCheckbox
+              label={"Polo"}
+              onCheckedChange={(checked: boolean) => handleCheckboxChange("type", "polo", checked)}
+              checked={filters.type.includes("polo")} />
           </div>
         </div>
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Price</h5>
           <div className="[&>*]:p-1 mt-2 mb-4">
             <Slider
-              defaultValue={[200, 400]}
+              defaultValue={filters.range}
               max={600}
               min={200}
               step={50}
-              value={range}
+              value={filters.range}
               onValueChange={handleRangeChange}
               formatLabel={(value) => `${value} Rs`} />
           </div>
         </div>
         <div className="flex gap-1">
           <Button className="w-full">Apply Filters</Button>
-          <Button className="w-full">Clear Filters</Button>
+          <Button className="w-full" variant={"outline"} onClick={clearFilters}>Clear Filters</Button>
         </div>
       </div>
     </aside>

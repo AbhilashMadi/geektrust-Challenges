@@ -2,18 +2,20 @@ import { useData } from "@/hooks/context";
 import { FC, lazy } from "react";
 
 const CartProductCard = lazy(() => import("@/components/custom/CartProductCard"));
+const EmptyCart = lazy(() => import("@/components/custom/EmptyCart"));
 
 const Cart: FC = () => {
   const { state } = useData();
+  const { cart } = state;
 
   return (
-    <div>
-      <section>
-        {state.cart.map((product) => {
-          return <CartProductCard product={product} />
-        })}
-      </section>
-    </div>
+    <div className="flex-center border min-h-[60dvh]">
+      <div className="w-2/3">
+        {!cart.length
+          ? <EmptyCart />
+          : <CartProductCard products={cart} />}
+      </div>
+    </div >
   )
 }
 

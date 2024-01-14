@@ -46,7 +46,7 @@ const Landing: FC = () => {
       yellow: "bg-yellow-500",
     };
 
-    return <div className={cn("h-5 w-5 rounded-full border", colorsMap[product.color.toLowerCase()])} />
+    return <span className={cn("h-5 w-5 rounded-full border", colorsMap[product.color.toLowerCase()])} />
   }
 
   useEffect(() => {

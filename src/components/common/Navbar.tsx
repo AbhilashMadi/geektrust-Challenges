@@ -9,7 +9,7 @@ const ModeToggle = lazy(() => import("@/components/custom/ModToggle"));
 const Cart = lazy(() => import("@/components/custom/Cart"));
 
 const Navbar: FC = () => {
-  const { navigateToRoute } = useData();
+  const { navigateToRoute, state } = useData();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -22,7 +22,7 @@ const Navbar: FC = () => {
           </div>
           <ModeToggle />
           <Link to={Paths.CART}>
-            <Cart count={4} />
+            <Cart count={state.cart.length} />
           </Link>
         </nav>
       </div>
