@@ -2,7 +2,8 @@ import { useData } from "@/hooks/context";
 import { Paths } from "@/routes/paths";
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
-import { ChangeEvent, FC, lazy } from "react";
+import { Badge } from "@ui/badge";
+import { ChangeEvent, FC, lazy, useRef, KeyboardEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 const ModeToggle = lazy(() => import("@/components/custom/ModToggle"));
@@ -13,6 +14,7 @@ const Navbar: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({
     search: ""
   });
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchParams((pre) => {
@@ -30,6 +32,22 @@ const Navbar: FC = () => {
     })
   }
 
+  const isInputInFocus = (): boolean => {
+    return inputRef.current === document.activeElement;
+  }
+
+  const handleSearchOnPressEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (isInputInFocus() && e.key === "Enter") {
+      handleSearch();
+    }
+  }
+
+  /**
+   * @description
+   * Here we can impliment the sharing of the search url work across the different browsers by taking the existing params from the
+   * current shared url and applying custom filters and showing the filtered products to user by intial load
+   */
+
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter] border-b border-border/40">
       <div className="container h-14 max-w-screen-2xl flex items-center justify-between bg-muted">
@@ -43,13 +61,18 @@ const Navbar: FC = () => {
           <div className="flex items-center gap-1">
             <Input
               placeholder="Search products"
-              value={searchParams.get("search")!}
+              value={searchParams.get("search") || ""}
               onChange={onSearchInputChange}
+              ref={inputRef}
+              onKeyDown={handleSearchOnPressEnter}
             />
             <Button
               size="sm"
               onClick={handleSearch}
-            >Search</Button>
+              className="search-button-container"
+            >
+              Search<Badge className="bg-muted/20 rounded ml-1">&#9166;</Badge>
+            </Button>
           </div>
           {/* Dark/Light Mode Toggle */}
           <ModeToggle />
