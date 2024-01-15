@@ -5,11 +5,32 @@ import { cn } from "@/lib/utils";
 import { Api } from "@/resources/api";
 import { Paths } from "@/routes/paths";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/card";
-import { IndianRupee, ShoppingCart } from "lucide-react";
+import { IndianRupee, PackagePlus, ShoppingCart } from "lucide-react";
 import { lazy, useEffect, type FC } from "react";
 import { toast } from "sonner";
 
 const Filters = lazy(() => import("@/components/common/Filters"));
+
+const ProductColor: FC<{ product: Product }> = ({ product }) => {
+  const colorsMap: Readonly<Record<string, string>> = {
+    pink: "bg-pink-500",
+    blue: "bg-blue-500",
+    green: "bg-green-500",
+    black: "bg-black",
+    purple: "bg-purple-500",
+    red: "bg-red-500",
+    grey: "bg-gray-500",
+    white: "bg-white",
+    yellow: "bg-yellow-500",
+  };
+
+  return (
+    <span
+      className={cn("h-5 w-5 rounded-full border", colorsMap[product.color.toLowerCase()])}
+      aria-label={`Product Color: ${product.color}`}
+    />
+  );
+};
 
 const Landing: FC = () => {
   const { dispatch, state, navigateToRoute } = useData();
@@ -36,22 +57,6 @@ const Landing: FC = () => {
     }
   };
 
-  const ProductColor: FC<{ product: Product }> = ({ product }) => {
-    const colorsMap: Readonly<Record<string, string>> = {
-      pink: "bg-pink-500",
-      blue: "bg-blue-500",
-      green: "bg-green-500",
-      black: "bg-black",
-      purple: "bg-purple-500",
-      red: "bg-red-500",
-      grey: "bg-gray-500",
-      white: "bg-white",
-      yellow: "bg-yellow-500",
-    };
-
-    return <span className={cn("h-5 w-5 rounded-full border", colorsMap[product.color.toLowerCase()])} />
-  }
-
   const handleProductAddToCart = (product: Product): void => {
     dispatch({
       type: "add_to_cart",
@@ -64,7 +69,7 @@ const Landing: FC = () => {
         label: "Cart",
         onClick: () => navigateToRoute(Paths.CART),
       }
-    })
+    });
   }
 
   useEffect(() => {
@@ -75,15 +80,14 @@ const Landing: FC = () => {
     <div className="flex gap-4 relative">
       <Filters />
       <section className="flex-grow col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {state.filteredItems.map((product) => {
-          return <Card key={product.id} className="max-h-[25rem]">
+        {state.filteredItems.map((product) => (
+          <Card key={product.id} className="max-h-[25rem]">
             <CardHeader>
-              <CardTitle>
-                {product.name}
-              </CardTitle>
+              <CardTitle>{product.name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <img src={product.imageURL}
+              <img
+                src={product.imageURL}
                 alt={product.name}
                 decoding="async"
                 loading="lazy"
@@ -92,25 +96,40 @@ const Landing: FC = () => {
                 className="h-52 w-72 object-contain"
               />
               <CardDescription className="grid grid-cols-4 gap-2 mt-2 [&>*]:p-1 text-xs [&>*]:rounded [&>*]:flex-center">
-                <span className="flex-col bg-muted">Color:{<ProductColor product={product} />}</span>
+                <span className="flex-col bg-muted">
+                  Color: <ProductColor product={product} />
+                </span>
                 <span className="bg-muted">Gender: {product.gender}</span>
                 <span className="bg-muted">Quantity: {product.quantity}</span>
                 <span className="bg-muted">Type: {product.type}</span>
-                <Button
-                  className="w-full col-span-3"
-                  onClick={() => handleProductAddToCart(product)}
-                >Add To Cart <ShoppingCart className="h-4 w-4 ml-2" />
-                </Button>
-                <div className="p-2 bg-muted rounded flex items-center">
+                {state.cart.some((a) => a.id === product.id) ? (
+                  <Button
+                    className="w-full col-span-3"
+                    onClick={() => navigateToRoute(Paths.CART)}
+                    variant={"secondary"}
+                    aria-label="Order Now"
+                  >
+                    Order Now <PackagePlus className="h-4 w-4 ml-2" />
+                  </Button>
+                ) : (
+                  <Button
+                    className="w-full col-span-3"
+                    onClick={() => handleProductAddToCart(product)}
+                    aria-label={`Add ${product.name} to Cart`}
+                  >
+                    Add To Cart <ShoppingCart className="h-4 w-4 ml-2" />
+                  </Button>
+                )}
+                <span className="p-2 bg-muted rounded flex items-center" aria-label={`Product Price: ${product.price}`}>
                   <IndianRupee size={15} /><span>{product.price}</span>
-                </div>
+                </span>
               </CardDescription>
             </CardContent>
           </Card>
-        })}
+        ))}
       </section>
     </div>
-  )
-}
+  );
+};
 
 export default Landing;

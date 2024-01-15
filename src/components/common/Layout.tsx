@@ -16,7 +16,7 @@ const Layout: FC<ILayout> = (props) => {
     <Navbar />
     <main className="min-h-[calc(100dvh-5rem)] container p-4 md:p-8">
       {children}
-      <Toaster />
+      <Toaster position="bottom-center" />
     </main>
     <Footer />
   </>;

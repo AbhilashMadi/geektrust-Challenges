@@ -1,5 +1,5 @@
-/* eslint-disable no-case-declarations */
 import { Reducer } from "react";
+import { toast } from "sonner";
 
 export type Product = {
   id: number;
@@ -11,26 +11,75 @@ export type Product = {
   color: string;
   gender: string;
   quantity: number;
-}
+};
 
 export type AppState = {
   products: Product[];
   filteredItems: Product[];
   cart: Product[];
-}
+};
 
-export type AppAction = { type: "fetch_products", payload: Product[] } |
-{ type: "filter_products", payload: Product[] } |
-{ type: "add_to_cart", payload: Product } |
-{ type: "increase_quantity", payload: Product["id"] } |
-{ type: "decrease_quantity", payload: Product["id"] } |
-{ type: "delete_cart_product", payload: Product["id"] };
+export type AppAction =
+  | { type: "fetch_products"; payload: Product[] }
+  | { type: "filter_products"; payload: Product[] }
+  | { type: "add_to_cart"; payload: Product }
+  | { type: "increase_quantity"; payload: Product["id"] }
+  | { type: "decrease_quantity"; payload: Product["id"] }
+  | { type: "remove_from_cart"; payload: Product["id"] };
 
 export const intialAppState: AppState = {
   products: [],
   cart: [],
   filteredItems: [],
+};
+
+// ------------------- REDUCERS ----------------------------
+
+const addToCart = (state: AppState, product: Product): AppState => {
+  if (state.cart.some((a) => a.id === product.id)) {
+    return state;
+  }
+
+  return {
+    ...state,
+    cart: [...state.cart, { ...product, quantity: 1 }],
+  };
+};
+
+const increaseQuantity = (state: AppState, id: number): AppState => {
+  const productInCart = state.cart.find((p) => p.id === id);
+  const productInStock = state.products.find((p) => p.id === id);
+
+  if (!productInCart || !productInStock) {
+    return state;
+  }
+
+  if (productInCart.quantity + 1 > productInStock.quantity) {
+    toast(`Unfortunately, we are currently unable to fulfil your purchase since there are no more available products. No more then ${state.products.find((p) => p.id === id)?.quantity}`, { className: "font-primary" });
+    return state;
+  }
+
+  return {
+    ...state,
+    cart: state.cart.map((p) => (p.id === id ? { ...p, quantity: p.quantity + 1 } : p)),
+  };
+};
+
+const decreaseQuantity = (state: AppState, id: number): AppState => {
+  return {
+    ...state,
+    cart: state.cart.map((p) => (p.id === id ? { ...p, quantity: Math.max(p.quantity - 1, 1) } : p)),
+  };
+};
+
+const removeProduct = (state: AppState, id: number): AppState => {
+  return {
+    ...state,
+    cart: state.cart.filter((p) => p.id !== id),
+  }
 }
+
+//----------------------------------------------------------
 
 export const appReducer: Reducer<AppState, AppAction> = (state, action) => {
   const { type, payload } = action;
@@ -47,59 +96,14 @@ export const appReducer: Reducer<AppState, AppAction> = (state, action) => {
         filteredItems: payload,
       };
     case "add_to_cart":
-      const updatedProductsAdd = state.products.map((product) =>
-        product.id === payload.id
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      );
-      return {
-        ...state,
-        cart: [...state.cart, { ...payload, quantity: 1 }],
-        products: updatedProductsAdd,
-      };
+      return addToCart(state, payload);
     case "increase_quantity":
-      const updatedCartIncrease = state.cart.map((product) =>
-        product.id === payload
-          ? { ...product, quantity: product.quantity + 1 }
-          : product
-      );
-      const updatedProductsIncrease = state.products.map((product) =>
-        product.id === payload
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      );
-      return {
-        ...state,
-        cart: updatedCartIncrease,
-        products: updatedProductsIncrease,
-      };
+      return increaseQuantity(state, payload);
     case "decrease_quantity":
-      const updatedCartDecrease = state.cart
-        .map((product) =>
-          product.id === payload
-            ? { ...product, quantity: product.quantity - 1 }
-            : product
-        )
-        .filter((product) => product.quantity > 0);
-
-      const updatedProductsDecrease = state.products.map((product) =>
-        product.id === payload
-          ? { ...product, quantity: product.quantity + 1 }
-          : product
-      );
-      return {
-        ...state,
-        cart: updatedCartDecrease,
-        products: updatedProductsDecrease,
-      };
-    case "delete_cart_product":
-      return {
-        ...state,
-        cart: state.cart.filter((product) => product.id !== payload),
-      }
+      return decreaseQuantity(state, payload);
+    case "remove_from_cart":
+      return removeProduct(state, payload);
     default:
       return state;
   }
 };
-
-

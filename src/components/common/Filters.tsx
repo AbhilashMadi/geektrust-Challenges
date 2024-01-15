@@ -5,7 +5,7 @@ import { Slider } from "@ui/slider";
 import { FC, useState } from "react";
 import { toast } from "sonner";
 
-type Filters = {
+export type Filters = {
   colors: string[];
   gender: string[];
   type: string[];
@@ -38,7 +38,7 @@ const Filters: FC = () => {
     setFilters((pre) => ({
       ...pre,
       range: value,
-    }))
+    }));
   }
 
   const clearFilters = (): void => {
@@ -65,90 +65,54 @@ const Filters: FC = () => {
 
     dispatch({ type: "filter_products", payload: filteredProducts });
 
-    toast("Applyed Filters For: ", {
-      description: <div className="space-x-1">
-        {!!filters.colors.length && <p>Colors: {filters.colors.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>}
-        {!!filters.gender.length && <p>Gender: {filters.gender.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>}
-        {!!filters.type.length && <p>Type: {filters.type.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>}
-        <p>Price Range: {filters.range.join("-")} INR</p>
-      </div>,
+    toast("Applied Filters For: ", {
+      description: (
+        <div className="space-x-1">
+          {!!filters.colors.length && (
+            <p>Colors: {filters.colors.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>
+          )}
+          {!!filters.gender.length && (
+            <p>Gender: {filters.gender.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>
+          )}
+          {!!filters.type.length && (
+            <p>Type: {filters.type.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>
+          )}
+          <p>Price Range: {filters.range.join("-")} INR</p>
+        </div>
+      ),
       className: "font-primary"
     })
   }
+
+  const renderCheckboxItems = (category: keyof Filters, items: string[]) => (
+    <div className="[&>*]:p-1 my-2">
+      {items.map((item) => (
+        <ItemCheckbox
+          key={item}
+          label={item}
+          onCheckedChange={(checked: boolean) => handleCheckboxChange(category, item.toLowerCase(), checked)}
+          checked={filters[category].includes(item.toLowerCase())}
+          aria-label={`${category} ${item}`}
+        />
+      ))}
+    </div>
+  );
+
 
   return (
     <aside className="w-80">
       <div className="sticky top-16 space-y-2">
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Colors</h5>
-          <div className="[&>*]:p-1 my-2">
-            <ItemCheckbox
-              label={"Pink"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "pink", checked)}
-              checked={filters.colors.includes("pink")} />
-            <ItemCheckbox
-              label={"Blue"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "blue", checked)}
-              checked={filters.colors.includes("blue")} />
-            <ItemCheckbox
-              label={"Green"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "green", checked)}
-              checked={filters.colors.includes("green")} />
-            <ItemCheckbox
-              label={"Black"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "black", checked)}
-              checked={filters.colors.includes("black")} />
-            <ItemCheckbox
-              label={"Purple"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "purple", checked)}
-              checked={filters.colors.includes("purple")} />
-            <ItemCheckbox
-              label={"Red"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "red", checked)}
-              checked={filters.colors.includes("red")} />
-            <ItemCheckbox
-              label={"Grey"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "grey", checked)}
-              checked={filters.colors.includes("grey")} />
-            <ItemCheckbox
-              label={"White"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "white", checked)}
-              checked={filters.colors.includes("white")} />
-            <ItemCheckbox
-              label={"Yellow"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("colors", "yellow", checked)}
-              checked={filters.colors.includes("yellow")} />
-          </div>
+          {renderCheckboxItems("colors", [...new Set(state.products.map(p => p.color))].sort())}
         </div>
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Gender</h5>
-          <div className="[&>*]:p-1 my-2">
-            <ItemCheckbox
-              label={"Men"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("gender", "men", checked)}
-              checked={filters.gender.includes("men")} />
-            <ItemCheckbox
-              label={"Women"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("gender", "women", checked)}
-              checked={filters.gender.includes("women")} />
-          </div>
+          {renderCheckboxItems("gender", [...new Set(state.products.map(p => p.gender))].sort())}
         </div>
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Type</h5>
-          <div className="[&>*]:p-1 my-2">
-            <ItemCheckbox
-              label={"Basic"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("type", "basic", checked)}
-              checked={filters.type.includes("basic")} />
-            <ItemCheckbox
-              label={"Hoodie"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("type", "hoodie", checked)}
-              checked={filters.type.includes("hoodie")} />
-            <ItemCheckbox
-              label={"Polo"}
-              onCheckedChange={(checked: boolean) => handleCheckboxChange("type", "polo", checked)}
-              checked={filters.type.includes("polo")} />
-          </div>
+          {renderCheckboxItems("type", [...new Set(state.products.map(p => p.type))].sort())}
         </div>
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Price</h5>
@@ -161,12 +125,14 @@ const Filters: FC = () => {
               step={50}
               value={filters.range}
               onValueChange={handleRangeChange}
-              formatLabel={(value) => `${value} Rs`} />
+              formatLabel={(value) => `${value} Rs`}
+              aria-label="Price Range"
+            />
           </div>
         </div>
         <div className="flex gap-1">
-          <Button className="w-full" onClick={applyFilters}>Apply Filters</Button>
-          <Button className="w-full" variant={"outline"} onClick={clearFilters}>Clear Filters</Button>
+          <Button className="w-full" onClick={applyFilters} aria-label="Apply Filters">Apply Filters</Button>
+          <Button className="w-full" variant="outline" onClick={clearFilters} aria-label="Clear Filters">Clear Filters</Button>
         </div>
       </div>
     </aside>

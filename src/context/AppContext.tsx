@@ -30,7 +30,7 @@ interface IAppContext {
 const AppContext: FC<IAppContext> = (props) => {
   const {
     children,
-    defaultTheme = "system",
+    defaultTheme = "light",
     ...restProps
   } = props;
   const [theme, setThemeFunc] = useState<Theme>(() => localStorage.getItem(StorageKeys.THEME_KEY) as Theme || defaultTheme);
