@@ -91,7 +91,7 @@ const Filters: FC = () => {
           key={item}
           label={item}
           onCheckedChange={(checked: boolean) => handleCheckboxChange(category, item.toLowerCase(), checked)}
-          checked={filters[category].includes(item.toLowerCase())}
+          checked={filters[category].includes(item.toLowerCase() as never)}
           aria-label={`${category} ${item}`}
         />
       ))}
