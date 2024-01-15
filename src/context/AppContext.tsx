@@ -3,6 +3,7 @@ import { Paths } from "@/routes/paths";
 import { Dispatch, FC, ReactNode, createContext, useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router";
 import { appReducer, initialAppState, type AppState, type AppAction, } from "@/context/reducers";
+import { scrollTo } from "@/lib/utils";
 
 type Theme = "system" | "dark" | "light";
 
@@ -15,7 +16,7 @@ type AppContextState = {
 }
 
 export const appContext = createContext<AppContextState>({
-  theme: "system",
+  theme: "light",
   setTheme: () => null,
   navigateToRoute: () => null,
   state: initialAppState,
@@ -38,6 +39,7 @@ const AppContext: FC<IAppContext> = (props) => {
   const navigate = useNavigate();
 
   const navigateToRoute = (path: Paths): void => {
+    scrollTo();
     navigate(path);
   }
 
