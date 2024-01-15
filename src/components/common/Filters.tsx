@@ -1,4 +1,5 @@
 import ItemCheckbox from "@/components/custom/ItemCheckBox";
+import { useData } from "@/hooks/context";
 import { Button } from "@ui/button";
 import { Slider } from "@ui/slider";
 import { FC, useState } from "react";
@@ -12,19 +13,13 @@ type Filters = {
 }
 
 const Filters: FC = () => {
+  const { state, dispatch } = useData();
   const [filters, setFilters] = useState<Filters>({
     colors: [],
     gender: [],
     type: [],
     range: [200, 600],
   })
-
-  const handleRangeChange = (value: [number, number]) => {
-    setFilters((pre) => ({
-      ...pre,
-      range: value,
-    }));
-  };
 
   const handleCheckboxChange = (category: keyof Filters, value: string, checked: boolean) => {
     setFilters((prevFilters) => {
@@ -39,6 +34,13 @@ const Filters: FC = () => {
     });
   };
 
+  const handleRangeChange = (value: [number, number]) => {
+    setFilters((pre) => ({
+      ...pre,
+      range: value,
+    }))
+  }
+
   const clearFilters = (): void => {
     setFilters({
       colors: [],
@@ -46,27 +48,36 @@ const Filters: FC = () => {
       type: [],
       range: [200, 600],
     });
+    dispatch({ type: "filter_products", payload: state.products });
   };
 
+  const applyFilters = () => {
+    const { colors, gender, type, range } = filters;
+
+    const filteredProducts = state.products.filter((product) => {
+      const isColorMatch = colors.length === 0 || colors.includes(product.color.toLowerCase());
+      const isGenderMatch = gender.length === 0 || gender.includes(product.gender.toLowerCase());
+      const isTypeMatch = type.length === 0 || type.includes(product.type.toLowerCase());
+      const isPriceInRange = product.price >= range[0] && product.price <= range[1];
+
+      return isColorMatch && isGenderMatch && isTypeMatch && isPriceInRange;
+    });
+
+    dispatch({ type: "filter_products", payload: filteredProducts });
+
+    toast("Applyed Filters For: ", {
+      description: <div className="space-x-1">
+        {!!filters.colors.length && <p>Colors: {filters.colors.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>}
+        {!!filters.gender.length && <p>Gender: {filters.gender.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>}
+        {!!filters.type.length && <p>Type: {filters.type.map((str) => <b className="capitalize" key={str}>{str}, </b>)}</p>}
+        <p>Price Range: {filters.range.join("-")} INR</p>
+      </div>,
+      className: "font-primary"
+    })
+  }
 
   return (
     <aside className="w-80">
-      {/* <Button
-        variant="outline"
-        onClick={() =>
-          toast("Event has been created", {
-            description: "Sunday, December 03, 2023 at 9:00 AM",
-            action: {
-              label: "Undo",
-              onClick: () => console.log("Undo"),
-            },
-            className: "font-primary"
-          })
-        }
-      >
-        Show Toast
-      </Button> */}
-      {JSON.stringify(filters)}
       <div className="sticky top-16 space-y-2">
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Colors</h5>
@@ -143,7 +154,8 @@ const Filters: FC = () => {
           <h5 className="font-medium border-b bg-muted p-2">Price</h5>
           <div className="[&>*]:p-1 mt-2 mb-4">
             <Slider
-              defaultValue={filters.range}
+              key={filters.range.join("-")}
+              defaultValue={[200, 600]}
               max={600}
               min={200}
               step={50}
@@ -153,7 +165,7 @@ const Filters: FC = () => {
           </div>
         </div>
         <div className="flex gap-1">
-          <Button className="w-full">Apply Filters</Button>
+          <Button className="w-full" onClick={applyFilters}>Apply Filters</Button>
           <Button className="w-full" variant={"outline"} onClick={clearFilters}>Clear Filters</Button>
         </div>
       </div>

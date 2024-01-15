@@ -15,10 +15,12 @@ export type Product = {
 
 export type AppState = {
   products: Product[];
+  filteredItems: Product[];
   cart: Product[];
 }
 
 export type AppAction = { type: "fetch_products", payload: Product[] } |
+{ type: "filter_products", payload: Product[] } |
 { type: "add_to_cart", payload: Product } |
 { type: "increase_quantity", payload: Product["id"] } |
 { type: "decrease_quantity", payload: Product["id"] } |
@@ -27,6 +29,7 @@ export type AppAction = { type: "fetch_products", payload: Product[] } |
 export const intialAppState: AppState = {
   products: [],
   cart: [],
+  filteredItems: [],
 }
 
 export const appReducer: Reducer<AppState, AppAction> = (state, action) => {
@@ -37,6 +40,11 @@ export const appReducer: Reducer<AppState, AppAction> = (state, action) => {
       return {
         ...state,
         products: payload,
+      };
+    case "filter_products":
+      return {
+        ...state,
+        filteredItems: payload,
       };
     case "add_to_cart":
       const updatedProductsAdd = state.products.map((product) =>

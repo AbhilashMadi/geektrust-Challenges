@@ -9,7 +9,7 @@ const Cart: FC = () => {
   const { cart } = state;
 
   return (
-    <div className="flex-center border min-h-[60dvh]">
+    <div className="flex-center min-h-[60dvh]">
       <div className="w-2/3">
         {!cart.length
           ? <EmptyCart />
