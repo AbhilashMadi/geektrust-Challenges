@@ -2,7 +2,7 @@ import { StorageKeys } from "@/resources/stoarge.const";
 import { Paths } from "@/routes/paths";
 import { Dispatch, FC, ReactNode, createContext, useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router";
-import { appReducer, intialAppState, type AppState, type AppAction, } from "@/context/reducers";
+import { appReducer, initialAppState, type AppState, type AppAction, } from "@/context/reducers";
 
 type Theme = "system" | "dark" | "light";
 
@@ -18,7 +18,7 @@ export const appContext = createContext<AppContextState>({
   theme: "system",
   setTheme: () => null,
   navigateToRoute: () => null,
-  state: intialAppState,
+  state: initialAppState,
   dispatch: () => null,
 })
 
@@ -34,7 +34,7 @@ const AppContext: FC<IAppContext> = (props) => {
     ...restProps
   } = props;
   const [theme, setThemeFunc] = useState<Theme>(() => localStorage.getItem(StorageKeys.THEME_KEY) as Theme || defaultTheme);
-  const [state, dispatch]: [AppState, Dispatch<AppAction>] = useReducer(appReducer, intialAppState);
+  const [state, dispatch]: [AppState, Dispatch<AppAction>] = useReducer(appReducer, initialAppState);
   const navigate = useNavigate();
 
   const navigateToRoute = (path: Paths): void => {
