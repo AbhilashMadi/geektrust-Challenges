@@ -21,6 +21,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "types": [
+      "vitest/globals"
+    ],
+    "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -35,11 +39,12 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "src/tests/setup.ts"
   ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
 }
