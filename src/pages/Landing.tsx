@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Api } from "@/resources/api";
 import { Paths } from "@/routes/paths";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/card";
-import { IndianRupee, PackagePlus, ShoppingCart } from "lucide-react";
+import { IndianRupee, PackagePlus, PackageX, ShoppingCart } from "lucide-react";
 import { lazy, useEffect, type FC } from "react";
 import { toast } from "sonner";
 
@@ -102,24 +102,34 @@ const Landing: FC = () => {
                 <span className="bg-muted">Gender: {product.gender}</span>
                 <span className="bg-muted">Quantity: {product.quantity}</span>
                 <span className="bg-muted">Type: {product.type}</span>
-                {state.cart.some((a) => a.id === product.id) ? (
-                  <Button
-                    className="w-full col-span-3"
-                    onClick={() => navigateToRoute(Paths.CART)}
-                    variant={"secondary"}
+                {!product.quantity
+                  ? <Button
+                    className={cn("w-full col-span-3 cursor-not-allowed")}
+                    disabled={!state.products.find((p) => p.id)?.quantity}
+                    variant={"destructive"}
                     aria-label="Order Now"
                   >
-                    Order Now <PackagePlus className="h-4 w-4 ml-2" />
+                    Out of stock <PackageX className="h-4 w-4 ml-2" />
                   </Button>
-                ) : (
-                  <Button
-                    className="w-full col-span-3"
-                    onClick={() => handleProductAddToCart(product)}
-                    aria-label={`Add ${product.name} to Cart`}
-                  >
-                    Add To Cart <ShoppingCart className="h-4 w-4 ml-2" />
-                  </Button>
-                )}
+                  : state.cart.some((a) => a.id === product.id) ? (
+                    <Button
+                      className={cn("w-full col-span-3")}
+                      onClick={() => navigateToRoute(Paths.CART)}
+                      disabled={!state.products.find((p) => p.id)?.quantity}
+                      variant={"secondary"}
+                      aria-label="Order Now"
+                    >
+                      Order Now <PackagePlus className="h-4 w-4 ml-2" />
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full col-span-3"
+                      onClick={() => handleProductAddToCart(product)}
+                      aria-label={`Add ${product.name} to Cart`}
+                    >
+                      Add To Cart <ShoppingCart className="h-4 w-4 ml-2" />
+                    </Button>
+                  )}
                 <span className="p-2 bg-muted rounded flex items-center" aria-label={`Product Price: ${product.price}`}>
                   <IndianRupee size={15} /><span>{product.price}</span>
                 </span>
@@ -128,7 +138,7 @@ const Landing: FC = () => {
           </Card>
         ))}
       </section>
-    </div>
+    </div >
   );
 };
 

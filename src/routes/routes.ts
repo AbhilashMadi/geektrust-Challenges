@@ -14,5 +14,9 @@ export const routes: readonly RouteObject[] = [
   {
     element: lazy(() => import("@/pages/Cart")),
     path: Paths.CART,
+  },
+  {
+    element: lazy(() => import("@/pages/handlers/NotFound")),
+    path: Paths.NOT_FOUND,
   }
 ]
