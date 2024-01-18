@@ -45,7 +45,7 @@ const Navbar: FC = () => {
   /**
    * @description
    * Here we can impliment the sharing of the search url work across the different browsers by taking the existing params from the
-   * current shared url and applying custom filters and showing the filtered products to user by intial load
+   * current shared url and applying custom filters and showing the filtered products to user on intial load
    */
 
   return (

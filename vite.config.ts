@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 /// <reference types="vite/client" />
 
 import { defineConfig } from "vite"
@@ -19,10 +18,4 @@ export default defineConfig({
       "@ui": path.resolve(__dirname, "src/components/ui"),
     }
   },
-  test: {
-    globals: true,
-    environment: "jsdom",
-    css: true,
-    setupFiles: path.resolve(__dirname, "src/tests/setup.ts"),
-  }
 })

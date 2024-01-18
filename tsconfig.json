@@ -21,10 +21,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": [
-      "vitest/globals"
-    ],
     "esModuleInterop": true,
+    "types": [
+      "node",
+      "@types/jest",
+      "@testing-library/jest-dom"
+    ],
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -40,7 +42,6 @@
   },
   "include": [
     "src",
-    "src/tests/setup.ts"
   ],
   "references": [
     {
