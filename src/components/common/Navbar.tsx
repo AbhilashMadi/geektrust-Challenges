@@ -1,13 +1,13 @@
 import { useData } from "@/hooks/context";
 import { Paths } from "@/routes/paths";
+import { Badge } from "@ui/badge";
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
-import { Badge } from "@ui/badge";
-import { ChangeEvent, FC, lazy, useRef, KeyboardEvent } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { ChangeEvent, FC, KeyboardEvent, lazy, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const ModeToggle = lazy(() => import("@/components/custom/ModToggle"));
-const Cart = lazy(() => import("@/components/custom/Cart"));
+const CartButton = lazy(() => import("@/components/custom/CartButton"));
 const MobileMenu = lazy(() => import("@/components/custom/MobileMenu"));
 
 const Navbar: FC = () => {
@@ -78,19 +78,15 @@ const Navbar: FC = () => {
           {/* Dark/Light Mode Toggle */}
           <ModeToggle />
           {/* Cart Link */}
-          <Link to={Paths.CART}>
-            <Cart count={state.cart.length} />
-          </Link>
+          <CartButton count={state.cart.length} />
         </nav>
         <div className="flex gap-2 md:hidden">
           <ModeToggle />
-          <Link to={Paths.CART}>
-            <Cart count={state.cart.length} />
-          </Link>
+          <CartButton count={state.cart.length} />
           <MobileMenu />
         </div>
       </div>
-    </header>
+    </header >
   );
 };
 

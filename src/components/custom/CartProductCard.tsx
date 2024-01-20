@@ -47,13 +47,13 @@ const CartProductCard: FC<ICartProductCard> = ({ products }) => {
               <td className="border px-4 py-2 text-center">
                 {state.products.find((p) => p.id === product.id)?.quantity}
               </td>
-              <td className="border px-4 py-2 text-center">
+              <td className="border px-4 py-2 text-center" data-testId="quantity">
                 {product.quantity}
               </td>
-              <td className="border px-4 py-2 text-center">
+              <td className="border px-4 py-2 text-center" data-testId="price">
                 {product.price}
               </td>
-              <td className="border px-4 py-2 text-center">
+              <td className="border px-4 py-2 text-center" data-testId="price-x-quantity">
                 {product.quantity * product.price}
               </td>
               <td className="border px-4 py-2 text-center">
@@ -92,7 +92,7 @@ const CartProductCard: FC<ICartProductCard> = ({ products }) => {
               <h4 className="scroll-m-20 text-xl tracking-tight">Total Amount</h4>
             </td>
             <td colSpan={4} className="border px-4 py-2 font-bold text-center">
-              <h4 className="scroll-m-20 text-xl tracking-tight">
+              <h4 className="scroll-m-20 text-xl tracking-tight" data-testId="total-amount">
                 {products.reduce((amount, product) => amount + product.quantity * product.price, 0)} Rs
               </h4>
             </td>
