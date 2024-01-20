@@ -6,7 +6,7 @@ import { Api } from "@/resources/api";
 import { Paths } from "@/routes/paths";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/card";
 import { IndianRupee, PackagePlus, PackageX, ShoppingCart } from "lucide-react";
-import { lazy, useEffect, type FC } from "react";
+import { lazy, useCallback, useEffect, type FC } from "react";
 import { toast } from "sonner";
 
 const Filters = lazy(() => import("@/components/common/Filters"));
@@ -35,7 +35,7 @@ const ProductColor: FC<{ product: Product }> = ({ product }) => {
 const Landing: FC = () => {
   const { dispatch, state, navigateToRoute } = useData();
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     const controller = new AbortController();
     try {
       const response = await fetch(Api.GET_PRODUCTS, {
@@ -55,7 +55,7 @@ const Landing: FC = () => {
     } finally {
       controller.abort();
     }
-  };
+  }, [dispatch]);
 
   const handleProductAddToCart = (product: Product): void => {
     dispatch({
@@ -72,9 +72,10 @@ const Landing: FC = () => {
     });
   }
 
+
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   return (
     <div className="flex gap-4 relative">

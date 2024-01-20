@@ -6,7 +6,8 @@ const config: JestConfigWithTsJest = {
     "^.+\\.tsx?$": "ts-jest"
   },
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1"
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@ui/(.*)$": "<rootDir>/src/components/ui/$1",
   },
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
@@ -14,7 +15,7 @@ const config: JestConfigWithTsJest = {
     name: "TEEREX STORE TESTS",
     color: "yellow",
   },
-
+  setupFilesAfterEnv: ["@testing-library/jest-dom"]
 };
 
 export default config;

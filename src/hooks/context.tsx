@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { appContext } from "@/context/AppContext";
 
-export const useData = () => {
+export function useData() {
   const context = useContext(appContext);
 
   if (context === undefined) {

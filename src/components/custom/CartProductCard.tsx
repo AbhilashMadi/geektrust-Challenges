@@ -1,7 +1,8 @@
 import { Product } from "@/context/reducers";
 import { useData } from "@/hooks/context";
+import { Paths } from "@/routes/paths";
 import { Button } from "@ui/button";
-import { MinusCircle, PlusCircle, XCircle } from "lucide-react";
+import { MinusCircle, PlusCircle, Trash2 } from "lucide-react";
 import { FC } from "react";
 
 interface ICartProductCard {
@@ -9,11 +10,11 @@ interface ICartProductCard {
 }
 
 const CartProductCard: FC<ICartProductCard> = ({ products }) => {
-  const { dispatch, state } = useData();
+  const { dispatch, state, navigateToRoute } = useData();
 
   return (
     <div>
-      <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Cart</h3>
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">Cart</h3>
       <div className="my-6 w-full overflow-y-auto">
         <table className="w-full">
           <thead className="bg-muted">
@@ -80,7 +81,7 @@ const CartProductCard: FC<ICartProductCard> = ({ products }) => {
                       variant="destructive"
                       onClick={() => dispatch({ type: "remove_from_cart", payload: product.id })}
                     >
-                      <XCircle size={20} />
+                      <Trash2 size={20} />
                     </Button>
                   </div>
                 </td>
@@ -101,7 +102,10 @@ const CartProductCard: FC<ICartProductCard> = ({ products }) => {
           </tfoot>
         </table>
       </div>
-      <Button className="float-end">Complete Purchase 🎉</Button>
+      <div className="flex justify-end gap-2">
+        <Button onClick={() => navigateToRoute(Paths.LANDING)} variant={"outline"}>Explore More</Button>
+        <Button>Complete Purchase 🎉</Button>
+      </div>
     </div>
   );
 };
