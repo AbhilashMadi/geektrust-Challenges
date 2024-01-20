@@ -78,9 +78,11 @@ const Landing: FC = () => {
   }, [fetchProducts]);
 
   return (
-    <div className="flex gap-4 relative">
-      <Filters />
-      <section className="flex-grow col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="flex gap-4">
+      <div className="hidden md:block relative">
+        <Filters />
+      </div>
+      <section className="flex-grow col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {state.filteredItems.map((product) => (
           <Card key={product.id} className="max-h-[25rem]">
             <CardHeader>

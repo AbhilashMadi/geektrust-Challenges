@@ -1,27 +1,21 @@
 import ItemCheckbox from "@/components/custom/ItemCheckBox";
+import { type FiltersState } from "@/context/AppContext";
 import { useData } from "@/hooks/context";
 import { Button } from "@ui/button";
 import { Slider } from "@ui/slider";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { toast } from "sonner";
 
-export type Filters = {
-  colors: string[];
-  gender: string[];
-  type: string[];
-  range: [number, number];
+interface IFilters {
+  handleDrawer?: () => void;
 }
 
-const Filters: FC = () => {
-  const { state, dispatch } = useData();
-  const [filters, setFilters] = useState<Filters>({
-    colors: [],
-    gender: [],
-    type: [],
-    range: [200, 600],
-  })
+const Filters: FC<IFilters> = (props) => {
+  const {
+    handleDrawer = () => null } = props;
+  const { state, dispatch, filters, setFilters } = useData();
 
-  const handleCheckboxChange = (category: keyof Filters, value: string, checked: boolean) => {
+  const handleCheckboxChange = (category: keyof FiltersState, value: string, checked: boolean) => {
     setFilters((prevFilters) => {
       const updatedCategory = checked
         ? [...prevFilters[category], value]
@@ -49,6 +43,7 @@ const Filters: FC = () => {
       range: [200, 600],
     });
     dispatch({ type: "filter_products", payload: state.products });
+    handleDrawer();
   };
 
   const applyFilters = () => {
@@ -64,6 +59,7 @@ const Filters: FC = () => {
     });
 
     dispatch({ type: "filter_products", payload: filteredProducts });
+    handleDrawer();
 
     toast("Applied Filters For: ", {
       description: (
@@ -84,7 +80,7 @@ const Filters: FC = () => {
     })
   }
 
-  const renderCheckboxItems = (category: keyof Filters, items: string[]) => (
+  const renderCheckboxItems = (category: keyof FiltersState, items: string[]) => (
     <div className="[&>*]:p-1 my-2">
       {items.map((item) => (
         <ItemCheckbox
@@ -100,21 +96,23 @@ const Filters: FC = () => {
 
 
   return (
-    <aside className="w-80">
+    <aside className="md:w-80 p-8 md:pt-0 sticky top-16">
       <div className="sticky top-16 space-y-2">
         <div className="[&>*]:px-4 border rounded">
           <h5 className="font-medium border-b bg-muted p-2">Colors</h5>
           {renderCheckboxItems("colors", [...new Set(state.products.map(p => p.color))].sort())}
         </div>
-        <div className="[&>*]:px-4 border rounded">
-          <h5 className="font-medium border-b bg-muted p-2">Gender</h5>
-          {renderCheckboxItems("gender", [...new Set(state.products.map(p => p.gender))].sort())}
+        <div className="flex justify-between gap-2">
+          <div className="[&>*]:px-4 border rounded flex-grow">
+            <h5 className="font-medium border-b bg-muted p-2">Gender</h5>
+            {renderCheckboxItems("gender", [...new Set(state.products.map(p => p.gender))].sort())}
+          </div>
+          <div className="[&>*]:px-4 border rounded flex-grow">
+            <h5 className="font-medium border-b bg-muted p-2">Type</h5>
+            {renderCheckboxItems("type", [...new Set(state.products.map(p => p.type))].sort())}
+          </div>
         </div>
-        <div className="[&>*]:px-4 border rounded">
-          <h5 className="font-medium border-b bg-muted p-2">Type</h5>
-          {renderCheckboxItems("type", [...new Set(state.products.map(p => p.type))].sort())}
-        </div>
-        <div className="[&>*]:px-4 border rounded">
+        <div className="[&>*]:px-4 border rounded col-span-2">
           <h5 className="font-medium border-b bg-muted p-2">Price</h5>
           <div className="[&>*]:p-1 mt-2 mb-4">
             <Slider

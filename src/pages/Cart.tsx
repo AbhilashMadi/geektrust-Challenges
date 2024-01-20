@@ -9,8 +9,9 @@ const Cart: FC = () => {
   const { cart } = state;
 
   return (
-    <div className="flex-center min-h-[75dvh]">
-      <div className="w-2/3">
+    <div className="min-h-[75dvh]">
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-3">Cart</h3>
+      <div className="overflow-scroll md:flex-center flex-col">
         {!cart.length
           ? <EmptyCart />
           : <CartProductCard products={cart} />}

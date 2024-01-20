@@ -8,6 +8,7 @@ import { Link, useSearchParams } from "react-router-dom";
 
 const ModeToggle = lazy(() => import("@/components/custom/ModToggle"));
 const Cart = lazy(() => import("@/components/custom/Cart"));
+const MobileMenu = lazy(() => import("@/components/custom/MobileMenu"));
 
 const Navbar: FC = () => {
   const { navigateToRoute, state, dispatch } = useData();
@@ -56,7 +57,7 @@ const Navbar: FC = () => {
           TeeRex Store
         </h2>
         {/* Navigation */}
-        <nav className="flex items-center gap-4">
+        <nav className="items-center gap-4 hidden md:flex">
           {/* Search */}
           <div className="flex items-center gap-1">
             <Input
@@ -81,6 +82,13 @@ const Navbar: FC = () => {
             <Cart count={state.cart.length} />
           </Link>
         </nav>
+        <div className="flex gap-2 md:hidden">
+          <ModeToggle />
+          <Link to={Paths.CART}>
+            <Cart count={state.cart.length} />
+          </Link>
+          <MobileMenu />
+        </div>
       </div>
     </header>
   );

@@ -1,18 +1,27 @@
 import { StorageKeys } from "@/resources/stoarge.const";
 import { Paths } from "@/routes/paths";
-import { Dispatch, FC, ReactNode, createContext, useEffect, useReducer, useState } from "react";
+import { Dispatch, FC, ReactNode, SetStateAction, createContext, useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router";
 import { appReducer, initialAppState, type AppState, type AppAction, } from "@/context/reducers";
 import { scrollTo } from "@/lib/utils";
 
 type Theme = "system" | "dark" | "light";
 
+export type FiltersState = {
+  colors: string[];
+  gender: string[];
+  type: string[];
+  range: [number, number];
+}
+
 type AppContextState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   navigateToRoute: (path: Paths) => void;
   state: AppState;
-  dispatch: Dispatch<AppAction>
+  dispatch: Dispatch<AppAction>;
+  filters: FiltersState;
+  setFilters: Dispatch<SetStateAction<FiltersState>>;
 }
 
 export const appContext = createContext<AppContextState>({
@@ -21,6 +30,13 @@ export const appContext = createContext<AppContextState>({
   navigateToRoute: () => null,
   state: initialAppState,
   dispatch: () => null,
+  filters: {
+    colors: [],
+    gender: [],
+    type: [],
+    range: [200, 600],
+  },
+  setFilters: () => null,
 })
 
 interface IAppContext {
@@ -37,6 +53,12 @@ const AppContext: FC<IAppContext> = (props) => {
   const [theme, setThemeFunc] = useState<Theme>(() => localStorage.getItem(StorageKeys.THEME_KEY) as Theme || defaultTheme);
   const [state, dispatch]: [AppState, Dispatch<AppAction>] = useReducer(appReducer, initialAppState);
   const navigate = useNavigate();
+  const [filters, setFilters] = useState<FiltersState>({
+    colors: [],
+    gender: [],
+    type: [],
+    range: [200, 600],
+  });
 
   const navigateToRoute = (path: Paths): void => {
     scrollTo();
@@ -70,7 +92,9 @@ const AppContext: FC<IAppContext> = (props) => {
     setTheme,
     navigateToRoute,
     state,
-    dispatch
+    dispatch,
+    filters,
+    setFilters,
   };
 
   useEffect(() => {
