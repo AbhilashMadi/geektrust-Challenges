@@ -74,8 +74,10 @@ const Landing: FC = () => {
 
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    if (!state.products.length) {
+      fetchProducts();
+    }
+  }, [fetchProducts, state.products.length]);
 
   return (
     <div className="flex gap-4">
