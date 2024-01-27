@@ -1,30 +1,58 @@
-# React + TypeScript + Vite
+# TeerexStore - Frontend Coding Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This repository represents my submission for the Frontend coding challenge, achieving a perfect score of 100/100.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Geektrust Score](src/assets/images/scroe.png)
 
-## Expanding the ESLint configuration
+## Live Demo
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Check out the live demo: [TeerexStore Demo](https://teerex-store-abhilash.netlify.app)
 
-- Configure the top-level `parserOptions` property like this:
+## Table of Contents
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Web Standards](#webstandards)
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Features
+
+- **Responsive Design**: Ensures a seamless user experience across various devices.
+- **State-of-the-Art UI**: Utilizes React and Typescript for a modern and interactive user interface.
+- **Perfect Score**: Achieved a flawless 100/100 in the Frontend coding challenge.
+- **Web standards**
+
+## Technologies Used
+
+- Vite JS
+- React + Typescript
+- Shadcn UI
+- Tailwind CSS
+
+## Installation
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/AbhilashMadi/geektrust-Challenges.git
+   ```
+
+2. Installing the dependencies:
+
+   ```
+   npm install
+   ```
+
+3. Starting the local server:
+
+   ```
+   npm start
+   ```
+
+## Web standards
+
+![Light House Score](src/assets/images/lighthouse.png)
